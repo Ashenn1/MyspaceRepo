@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import java.io.*;
+import java.util.*;
 
 
 @Controller
@@ -50,10 +51,22 @@ public class UserController {
     @PostMapping("/signin")
      public String signin(Model model, @ModelAttribute User user)
      {
-        System.out.print(user.getEmail() + user.getPassword());
-        //Userrepo.save(user);
-        
+        System.out.print(user.getEmail() + user.getPassword() + user.getUserID());
+        Iterable<User> userIterable = Userrepo.findAll();
+        ArrayList<User> list = new ArrayList();
+        for(User userDummy : userIterable) {
+            //list.add(userDummy);
+            if(user.getUserID() == userDummy.getUserID()){
+               System.out.print("useer is found");
+               break;
+            }
+            else
+                System.out.print("user is not found or you've entered something wrong");
+        }
         model.addAttribute("user",new User());
+        if(Userrepo.exists(user.getUserID())){
+            System.out.print("user is found");
+        }
         return "signin";
      }
 }
