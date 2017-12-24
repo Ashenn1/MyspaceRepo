@@ -21,6 +21,7 @@ public class UserController {
     @Autowired
     private UserRepository Userrepo ;
     
+
     @GetMapping("/signup")
     public String showform(Model model)
     {
@@ -31,7 +32,7 @@ public class UserController {
     @PostMapping("/signup")
      public String signup(Model model , @ModelAttribute User user )
      {
-        System.out.print(user.getFirstName() + user.getLastName() + user.getEmail());
+        System.out.print(user.getFirstName() + user.getLastName());
         Userrepo.save(user);
         model.addAttribute("user",new User());
         return "signup";
@@ -54,6 +55,4 @@ public class UserController {
         model.addAttribute("user",new User());
         return "signin";
      }
-    
-    
 }
